@@ -91,6 +91,7 @@ El contrato emite los siguientes eventos para el seguimiento off-chain:
 * **Red**: Sepolia Testnet
 * **Dirección del Contrato**: `0x8ca31c60dd980ffe94e67053d0d1c5a56a428d80`
 * **Explorador**: [Ver en Sepolia Etherscan](https://sepolia.etherscan.io/address/0x8ca31c60dd980ffe94e67053d0d1c5a56a428d80)
+* **Transacción de Ejemplo (Depósito)**: [Ver Transacción en Etherscan](https://sepolia.etherscan.io/tx/0x944cd02c4d94fdd5594f0ea3cead311ad64a0c4f01b832dee760dfdffca2da4e)
 
 ## 🛠️ Desarrollo
 ### Tecnologías Utilizadas
@@ -101,3 +102,18 @@ El contrato emite los siguientes eventos para el seguimiento off-chain:
 * Sepolia Testnet
 
 ### Estructura del Proyecto
+
+kipu-bank/
+├── contracts/
+│   └── KipuBank.sol
+└── README.md
+
+## 📝 Licencia
+Este proyecto está bajo la Licencia MIT.
+
+## 👨‍💻 Autor
+* **alejoherrera**
+* **GitHub**: [@alejoherrera](https://github.com/alejoherrera)
+* **Sitio Web**: [alejoherrera.com](https://alejoherrera.com)
+
+*Desarrollado para examen del Módulo 2 de ETH Kipu. Gracias*
