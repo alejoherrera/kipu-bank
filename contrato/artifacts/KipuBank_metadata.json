@@ -1,0 +1,646 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_withdrawalLimit",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_bankCap",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "attempted",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
+					}
+				],
+				"name": "DepositExceedsBankCap",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DepositMustBeGreaterThanZero",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "attempted",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "available",
+						"type": "uint256"
+					}
+				],
+				"name": "InsufficientBalance",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoFundsDeposited",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "TransferFailed",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "attempted",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "limit",
+						"type": "uint256"
+					}
+				],
+				"name": "WithdrawalExceedsLimit",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "WithdrawalMustBeGreaterThanZero",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newBalance",
+						"type": "uint256"
+					}
+				],
+				"name": "DepositMade",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newBalance",
+						"type": "uint256"
+					}
+				],
+				"name": "WithdrawalMade",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "VERSION",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "bankCap",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getBankStats",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "_totalDeposited",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalDeposits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_totalWithdrawals",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_bankUtilization",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					}
+				],
+				"name": "getUserStats",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deposits",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "withdrawals",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalDeposited",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalDeposits",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalWithdrawals",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "userBalances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "userDepositCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "userWithdrawalCount",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdrawalLimit",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"author": "Tu Nombre",
+			"details": "Implementa límites de depósito global y retiro por transacción",
+			"errors": {
+				"DepositExceedsBankCap(uint256,uint256)": [
+					{
+						"params": {
+							"attempted": "Cantidad que se intentó depositar",
+							"limit": "Límite máximo permitido"
+						}
+					}
+				],
+				"InsufficientBalance(uint256,uint256)": [
+					{
+						"params": {
+							"attempted": "Cantidad que se intentó retirar",
+							"available": "Balance disponible del usuario"
+						}
+					}
+				],
+				"WithdrawalExceedsLimit(uint256,uint256)": [
+					{
+						"params": {
+							"attempted": "Cantidad que se intentó retirar",
+							"limit": "Límite máximo por transacción"
+						}
+					}
+				]
+			},
+			"events": {
+				"DepositMade(address,uint256,uint256)": {
+					"params": {
+						"amount": "Cantidad depositada en wei",
+						"newBalance": "Nuevo balance del usuario después del depósito",
+						"user": "Dirección del usuario que depositó"
+					}
+				},
+				"WithdrawalMade(address,uint256,uint256)": {
+					"params": {
+						"amount": "Cantidad retirada en wei",
+						"newBalance": "Nuevo balance del usuario después del retiro",
+						"user": "Dirección del usuario que retiró"
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"constructor": {
+					"details": "Establece los límites immutable y el propietario",
+					"params": {
+						"_bankCap": "Límite máximo de depósitos totales en el banco",
+						"_withdrawalLimit": "Límite máximo de retiro por transacción"
+					}
+				},
+				"deposit()": {
+					"details": "Función payable que acepta ETH y actualiza el balance del usuario Requirements: - El depósito debe ser mayor que 0 - El depósito no debe exceder el límite del banco"
+				},
+				"getBankStats()": {
+					"details": "Función view que retorna múltiples valores",
+					"returns": {
+						"_bankUtilization": "Porcentaje de utilización del banco (en basis points)",
+						"_totalDeposited": "Total depositado en el banco",
+						"_totalDeposits": "Número total de depósitos",
+						"_totalWithdrawals": "Número total de retiros"
+					}
+				},
+				"getUserBalance(address)": {
+					"details": "Función view que no modifica el estado",
+					"params": {
+						"user": "Dirección del usuario a consultar"
+					},
+					"returns": {
+						"balance": "Balance del usuario en wei"
+					}
+				},
+				"getUserStats(address)": {
+					"details": "Función view que retorna información detallada del usuario",
+					"params": {
+						"user": "Dirección del usuario a consultar"
+					},
+					"returns": {
+						"balance": "Balance actual del usuario",
+						"deposits": "Número de depósitos realizados",
+						"withdrawals": "Número de retiros realizados"
+					}
+				},
+				"withdraw(uint256)": {
+					"details": "Función external que transfiere ETH al usuario",
+					"params": {
+						"amount": "Cantidad a retirar en wei Requirements: - El usuario debe tener fondos depositados - La cantidad debe ser mayor que 0 - La cantidad no debe exceder el límite de retiro por transacción - El usuario debe tener suficiente balance"
+					}
+				}
+			},
+			"stateVariables": {
+				"VERSION": {
+					"details": "Variable constante para identificar la versión"
+				},
+				"bankCap": {
+					"details": "Variable immutable establecida en el constructor"
+				},
+				"owner": {
+					"details": "Se establece en el constructor con msg.sender"
+				},
+				"totalDeposited": {
+					"details": "Se actualiza en cada depósito y retiro"
+				},
+				"totalDeposits": {
+					"details": "Se incrementa en cada depósito exitoso"
+				},
+				"totalWithdrawals": {
+					"details": "Se incrementa en cada retiro exitoso"
+				},
+				"userBalances": {
+					"details": "Lleva registro del balance de cada usuario"
+				},
+				"userDepositCount": {
+					"details": "Lleva registro de cuántos depósitos ha hecho cada usuario"
+				},
+				"userWithdrawalCount": {
+					"details": "Lleva registro de cuántos retiros ha hecho cada usuario"
+				},
+				"withdrawalLimit": {
+					"details": "Variable immutable establecida en el constructor"
+				}
+			},
+			"title": "KipuBank",
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"DepositExceedsBankCap(uint256,uint256)": [
+					{
+						"notice": "Error cuando el depósito excede el límite del banco"
+					}
+				],
+				"DepositMustBeGreaterThanZero()": [
+					{
+						"notice": "Error cuando el depósito es de 0 ETH"
+					}
+				],
+				"InsufficientBalance(uint256,uint256)": [
+					{
+						"notice": "Error cuando el retiro excede el balance del usuario"
+					}
+				],
+				"NoFundsDeposited()": [
+					{
+						"notice": "Error cuando el usuario no tiene fondos depositados"
+					}
+				],
+				"TransferFailed()": [
+					{
+						"notice": "Error cuando la transferencia de ETH falla"
+					}
+				],
+				"WithdrawalExceedsLimit(uint256,uint256)": [
+					{
+						"notice": "Error cuando el retiro excede el límite por transacción"
+					}
+				],
+				"WithdrawalMustBeGreaterThanZero()": [
+					{
+						"notice": "Error cuando el retiro es de 0 ETH"
+					}
+				]
+			},
+			"events": {
+				"DepositMade(address,uint256,uint256)": {
+					"notice": "Evento emitido cuando un usuario realiza un depósito exitoso"
+				},
+				"WithdrawalMade(address,uint256,uint256)": {
+					"notice": "Evento emitido cuando un usuario realiza un retiro exitoso"
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"VERSION()": {
+					"notice": "Versión del contrato"
+				},
+				"bankCap()": {
+					"notice": "Límite máximo de depósitos totales en el banco (10 ETH)"
+				},
+				"constructor": {
+					"notice": "Constructor del contrato KipuBank"
+				},
+				"deposit()": {
+					"notice": "Permite a los usuarios depositar ETH en su bóveda personal"
+				},
+				"getBankStats()": {
+					"notice": "Obtiene estadísticas completas del banco"
+				},
+				"getUserBalance(address)": {
+					"notice": "Obtiene el balance de un usuario específico"
+				},
+				"getUserStats(address)": {
+					"notice": "Obtiene estadísticas de un usuario específico"
+				},
+				"owner()": {
+					"notice": "Dirección del propietario del contrato"
+				},
+				"totalDeposited()": {
+					"notice": "Total de ETH depositado en el banco"
+				},
+				"totalDeposits()": {
+					"notice": "Contador total de depósitos realizados"
+				},
+				"totalWithdrawals()": {
+					"notice": "Contador total de retiros realizados"
+				},
+				"userBalances(address)": {
+					"notice": "Mapeo de direcciones a sus balances depositados"
+				},
+				"userDepositCount(address)": {
+					"notice": "Mapeo de direcciones a número de depósitos realizados"
+				},
+				"userWithdrawalCount(address)": {
+					"notice": "Mapeo de direcciones a número de retiros realizados"
+				},
+				"withdraw(uint256)": {
+					"notice": "Permite a los usuarios retirar ETH de su bóveda personal"
+				},
+				"withdrawalLimit()": {
+					"notice": "Límite máximo de retiro por transacción (0.1 ETH)"
+				}
+			},
+			"notice": "Un contrato de banco simple que permite depósitos y retiros de ETH",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contrato/KipuBank.sol": "KipuBank"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contrato/KipuBank.sol": {
+			"keccak256": "0x94c4e1b61c784efcb79eff1d383da7d40eb1bb014773e7e9cd97ff712f58496f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e5d8a92bb827594d26ba7bc94b5c39148b9b7437f3f047ca0d5b2c0936184ed6",
+				"dweb:/ipfs/QmbgXmogkkX7W311T4iz7sGYUfTCJ3RGi8wiExNYVUFJB2"
+			]
+		}
+	},
+	"version": 1
+}
